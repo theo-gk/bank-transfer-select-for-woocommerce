@@ -152,7 +152,7 @@ class Wc_Bank_Transfer_Select {
 
 		$this->loader->add_filter( 'woocommerce_gateway_description', $plugin_public, 'dc_gateway_bacs_custom_fields', 20, 2 );
 		$this->loader->add_action( 'woocommerce_checkout_process', $plugin_public, 'dc_bacs_option_validation' );
-		$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'save_bacs_option_to_order_meta', 10, 2 );
+		$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'dc_save_bacs_option_to_order_meta', 10, 2 );
 		$this->loader->add_filter( 'woocommerce_bacs_accounts', $plugin_public, 'dc_show_only_selected_bank_details', 10, 2 );
 		$this->loader->add_filter( 'woocommerce_order_get_payment_method_title', $plugin_public, 'dc_add_bank_name_to_bacs_payment_title', 10, 2 );
 
@@ -163,7 +163,7 @@ class Wc_Bank_Transfer_Select {
 	}
 
 	/**
-	 * Run the loader to execute all of the hooks with WordPress.
+	 * Run the loader to execute all hooks with WordPress.
 	 *
 	 * @since    1.0
 	 */

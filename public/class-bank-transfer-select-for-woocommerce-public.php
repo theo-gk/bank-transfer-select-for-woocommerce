@@ -43,7 +43,15 @@ class Wc_Bank_Transfer_Select_Public {
 	}
 
 
-
+	/**
+	 * Adds a select field with the bank options when bacs is selected.
+	 *
+	 * @since    1.0
+	 * @param   string  $description    Payment method description.
+	 * @param   string  $payment_id     The payment method ID.
+     *
+     * @return  string  The Payment method description.
+	 */
 	function dc_gateway_bacs_custom_fields( $description, $payment_id )
 	{
 		if ( 'bacs' === $payment_id ) {
@@ -68,6 +76,15 @@ class Wc_Bank_Transfer_Select_Public {
 	}
 
 
+	/**
+     * Get a list of all available bank options.
+     * Fills the select button.
+     *
+     * @since    1.0
+     * @access   static
+     *
+	 * @return array The bank options.
+	 */
 	static function dc_get_available_bacs_bank_names() {
 		$bank_names_select_options = [];
 
@@ -91,6 +108,11 @@ class Wc_Bank_Transfer_Select_Public {
 	}
 
 
+	/**
+	 * Make bank option required if bacs is selected.
+	 *
+	 * @since    1.0
+	 */
 	function dc_bacs_option_validation() {
 		if ( isset( $_POST['payment_method'] ) && $_POST['payment_method'] === 'bacs'
 		     && isset( $_POST['dc_bacs_option'] ) && '' === $_POST['dc_bacs_option'] ) {
@@ -99,7 +121,15 @@ class Wc_Bank_Transfer_Select_Public {
 	}
 
 
-	function save_bacs_option_to_order_meta( $order_id, $data )
+	/**
+	 * Save selected bank to order meta.
+	 *
+     * @param  int      $order_id   Saved order ID.
+     * @param  array    $data       Posted data.
+     *
+	 * @since    1.0
+	 */
+	function dc_save_bacs_option_to_order_meta( $order_id, $data )
 	{
 		if ( isset( $_POST['dc_bacs_option'] ) && !empty( $_POST['dc_bacs_option'] ) ) {
 			update_post_meta( $order_id, 'dc_bacs_option', wc_clean( $_POST['dc_bacs_option'] ) );
@@ -107,6 +137,14 @@ class Wc_Bank_Transfer_Select_Public {
 	}
 
 
+	/**
+	 * Show only selected bank details on the customer email and thank you page.
+	 *
+	 * @param  array    $banks      Banks for display.
+	 * @param  int      $order_id   The order ID.
+	 *
+	 * @since    1.0
+	 */
 	function dc_show_only_selected_bank_details( $banks, $order_id ) {
 
 		$bank_selected = get_post_meta( $order_id, 'dc_bacs_option', true );
@@ -124,6 +162,15 @@ class Wc_Bank_Transfer_Select_Public {
 	}
 
 
+	/**
+	 * Appends the selected bank name to the bacs payment title.
+	 *
+	 * @since    1.0
+	 * @param   string  $title  Payment method title.
+	 * @param   WC_Order  $order  The payment method ID.
+	 *
+	 * @return  string  Payment method title.
+	 */
 	function dc_add_bank_name_to_bacs_payment_title( $title, $order ) {
 
 		if ( 'bacs' !== $order->get_payment_method() ) return $title;
@@ -136,7 +183,6 @@ class Wc_Bank_Transfer_Select_Public {
 
 		return $title;
 	}
-
 
 
     /**
@@ -156,5 +202,4 @@ class Wc_Bank_Transfer_Select_Public {
     public function enqueue_scripts() {
 
     }
-
 }

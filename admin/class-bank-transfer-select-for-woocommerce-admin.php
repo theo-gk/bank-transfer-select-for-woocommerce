@@ -43,29 +43,31 @@ class Wc_Bank_Transfer_Select_Admin {
 
 	/**
      * Displays selected bank to the admin order edit page.
-     * 
-	 * @param $order
+     *
+     * @since    1.0
+	 * @param WC_Order  $order  The order being edited.
 	 *
-	 * @return void
 	 */
 	function dc_display_bacs_option_order_meta( $order )
 	{
 		if ( 'bacs' !== $order->get_payment_method() ) return;
 
         $banks_list     = Wc_Bank_Transfer_Select_Public::dc_get_available_bacs_bank_names();
-		$bank_selected  = $order->get_meta( 'dc_bacs_option' );
+		$bank_selected  = get_post_meta ( $order->get_id(), 'dc_bacs_option', true );
 
         // if the selected bank gets deleted, is added back to the list for this order only
         if ( !empty( $bank_selected ) && !in_array( $bank_selected, $banks_list ) ) {
 	        $banks_list[ wc_clean( trim( $bank_selected ) ) ] = esc_html( $bank_selected );
         }
-		?>
+
+        if ( !empty( $bank_selected ) ) : ?>
         <div class="address">
             <p<?php if ( empty( $bank_selected ) ) echo ' class="none_set"'; ?>>
                 <strong><?php esc_html_e( 'Selected bank for transfer', 'bank-transfer-select-for-woocommerce' ); ?>:</strong>
-				<?php echo wp_kses_post( $bank_selected ); ?>
+				<?php echo esc_html( $bank_selected ); ?>
             </p>
         </div>
+        <?php endif; ?>
         <div class="edit_address">
 			<?php
 			woocommerce_wp_select([
@@ -81,12 +83,18 @@ class Wc_Bank_Transfer_Select_Admin {
 	}
 
 
+	/**
+	 * Saves selected bank if manually changed in the admin order edit page.
+	 *
+	 * @since    1.0
+	 * @param int  $order_id  The order ID.
+	 *
+	 */
 	function dc_save_bacs_option_order_meta( $order_id ) {
 		if ( isset( $_POST['dc_bacs_option'] ) ) {
 			update_post_meta( $order_id, 'dc_bacs_option', wc_clean( trim( $_POST['dc_bacs_option'] ) ) );
 		}
 	}
-
 
 
 	/**
