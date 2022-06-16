@@ -65,4 +65,7 @@ function run_wc_bank_transfer_select() {
 	$plugin = new Wc_Bank_Transfer_Select();
 	$plugin->run();
 }
-run_wc_bank_transfer_select();
+
+if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+	run_wc_bank_transfer_select();
+}
