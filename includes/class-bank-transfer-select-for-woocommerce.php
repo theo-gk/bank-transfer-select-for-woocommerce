@@ -17,7 +17,7 @@ class Wc_Bank_Transfer_Select {
 	 *
 	 * @since    1.0
 	 * @access   protected
-	 * @var      Wc_Bank_Transfer_Select_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Wc_Bank_Transfer_Select_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -26,7 +26,7 @@ class Wc_Bank_Transfer_Select {
 	 *
 	 * @since    1.0
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string $plugin_name The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
 
@@ -35,7 +35,7 @@ class Wc_Bank_Transfer_Select {
 	 *
 	 * @since    1.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string $version The current version of the plugin.
 	 */
 	protected $version;
 
@@ -133,12 +133,14 @@ class Wc_Bank_Transfer_Select {
 
 		$this->loader->add_action( 'woocommerce_admin_order_data_after_billing_address', $plugin_admin, 'dc_display_bacs_option_order_meta' );
 		$this->loader->add_action( 'woocommerce_process_shop_order_meta', $plugin_admin, 'dc_save_bacs_option_order_meta' );
-		
 
-        // enqueue styles-scripts
-//        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-//		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-    }
+		// declare compatibility with High-Performance Order Storage
+		$this->loader->add_action( 'before_woocommerce_init', $plugin_admin, 'declare_compatibility_with_wc_hpos' );
+
+		// enqueue styles - scripts
+		// $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		// $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+	}
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality of the plugin.
@@ -152,14 +154,12 @@ class Wc_Bank_Transfer_Select {
 
 		$this->loader->add_filter( 'woocommerce_gateway_description', $plugin_public, 'dc_gateway_bacs_custom_fields', 20, 2 );
 		$this->loader->add_action( 'woocommerce_checkout_process', $plugin_public, 'dc_bacs_option_validation' );
-		$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $plugin_public, 'dc_save_bacs_option_to_order_meta', 10, 2 );
+		$this->loader->add_action( 'woocommerce_checkout_create_order', $plugin_public, 'dc_save_bacs_option_to_order_meta', 10, 2 );
 		$this->loader->add_filter( 'woocommerce_bacs_accounts', $plugin_public, 'dc_show_only_selected_bank_details', 10, 2 );
-		$this->loader->add_filter( 'woocommerce_order_get_payment_method_title', $plugin_public, 'dc_add_bank_name_to_bacs_payment_title', 10, 2 );
-
+		$this->loader->add_filter( 'woocommerce_order_get_payment_method_title', $plugin_public, 'dc_add_bank_name_to_bacs_payment_title', 99, 2 );
 
 //        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 //        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
 	}
 
 	/**
@@ -175,8 +175,8 @@ class Wc_Bank_Transfer_Select {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0
 	 * @return    string    The name of the plugin.
+	 * @since     1.0
 	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
@@ -185,8 +185,8 @@ class Wc_Bank_Transfer_Select {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0
 	 * @return    Wc_Bank_Transfer_Select_Loader    Orchestrates the hooks of the plugin.
+	 * @since     1.0
 	 */
 	public function get_loader() {
 		return $this->loader;
@@ -195,11 +195,10 @@ class Wc_Bank_Transfer_Select {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0
 	 * @return    string    The version number of the plugin.
+	 * @since     1.0
 	 */
 	public function get_version() {
 		return $this->version;
 	}
-
 }

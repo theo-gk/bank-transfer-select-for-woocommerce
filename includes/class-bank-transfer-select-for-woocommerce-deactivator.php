@@ -13,10 +13,8 @@ class Wc_Bank_Transfer_Select_Deactivator {
 
 	/**
 	 * Deletes all transients and options on deactivation.
-     *
+	 *
 	 * @since    1.0
 	 */
-	public static function deactivate() {
-
-	}
+	public static function deactivate() {}
 }

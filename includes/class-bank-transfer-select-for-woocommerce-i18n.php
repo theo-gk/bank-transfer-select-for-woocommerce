@@ -24,7 +24,5 @@ class Wc_Bank_Transfer_Select_i18n {
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
-
 	}
-
 }

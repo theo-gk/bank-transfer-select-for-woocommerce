@@ -5,13 +5,13 @@ Plugin Name: Bank Transfer Select for WooCommerce
 Tags: woocommerce, bacs, bank transfer, bank select, checkout
 Author: Theo Gkitsos
 Author link: https://www.dicha.gr/
-Version: 1.0
-Stable tag: 1.0
+Version: 1.0.1
+Stable tag: 1.0.1
 Requires at least: 5.7
-Tested up to: 6.0
+Tested up to: 6.3.2
 Requires PHP: 7.2
 WC requires at least: 5.5.0
-WC tested up to: 6.6
+WC tested up to: 8.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,9 @@ Allows customers to select a specific bank to transfer their payment.
 3. Activate the plugin through the 'Plugins' menu in WordPress Dashboard.
 
 == Changelog ==
+
+= 1.0.1 =
+* Add HPOS compatibility.
 
 = 1.0.0 =
 * Initial Release

@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Bank Transfer Select for WooCommerce
  * Description:       Allows customers to select a specific bank to transfer their payment.
- * Version:           1.0
+ * Version:           1.0.1
  * Author:            Theo Gkitsos
  * Author URI:        https://www.dicha.gr/
  * License:           GPL-2.0+
@@ -10,11 +10,11 @@
  * Text Domain:       bank-transfer-select-for-woocommerce
  * Domain Path:       /languages
  * Requires at least: 5.7
- * Tested up to:      6.0
+ * Tested up to:      6.3.2
  * Requires PHP:      7.2
  * WC requires at least: 5.5.0
- * WC tested up to:   6.6
- * Stable tag:        1.0
+ * WC tested up to:   8.2.1
+ * Stable tag:        1.0.1
  */
 
 // If this file is called directly, abort.
@@ -25,9 +25,9 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Current plugin version.
  */
-define( 'WC_BANK_TRANSFER_SELECT_VERSION', '1.0' );
+define( 'WC_BANK_TRANSFER_SELECT_VERSION', '1.0.1' );
 define( 'WC_BANK_TRANSFER_SELECT_PLUGIN_DIR', dirname( __FILE__ ) );
-define( 'WC_BANK_TRANSFER_SELECT_BASE_FILE', 'bank-transfer-select-for-woocommerce/bank-transfer-select-for-woocommerce.php' );
+define( 'WC_BANK_TRANSFER_PLUGIN_FILE', __FILE__ );
 
 /**
  * The code that runs during plugin activation.
@@ -35,7 +35,7 @@ define( 'WC_BANK_TRANSFER_SELECT_BASE_FILE', 'bank-transfer-select-for-woocommer
  */
 function activate_wc_bank_transfer_select() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bank-transfer-select-for-woocommerce-activator.php';
-    Wc_Bank_Transfer_Select_Activator::activate();
+	Wc_Bank_Transfer_Select_Activator::activate();
 }
 
 /**
@@ -44,7 +44,7 @@ function activate_wc_bank_transfer_select() {
  */
 function deactivate_wc_bank_transfer_select() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-bank-transfer-select-for-woocommerce-deactivator.php';
-    Wc_Bank_Transfer_Select_Deactivator::deactivate();
+	Wc_Bank_Transfer_Select_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_wc_bank_transfer_select' );
